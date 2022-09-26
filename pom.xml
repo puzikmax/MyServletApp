@@ -6,7 +6,7 @@
 
     <groupId>ru.javavision</groupId>
     <artifactId>servlet-tutorial</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>my</version>
     <packaging>war</packaging>
 
     <build>
