@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.javavision</groupId>
-    <artifactId>servlet-tutorial</artifactId>
+    <artifactId>servlet</artifactId>
     <version>my</version>
     <packaging>war</packaging>
 
