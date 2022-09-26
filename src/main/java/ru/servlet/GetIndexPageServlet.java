@@ -20,7 +20,7 @@ public class GetIndexPageServlet extends HttpServlet {
 
         if (users == null || !(users instanceof ConcurrentHashMap)) {
 
-            throw new IllegalStateException("You'reeeeee repo does not initialize!");
+            throw new IllegalStateException("You'eeee repo does not initialize!");
         } else {
 
             this.users = (ConcurrentHashMap<Integer, User>) users;
