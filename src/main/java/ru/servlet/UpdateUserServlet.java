@@ -1,8 +1,9 @@
 package ru.servlet;
 
-import ru.DAO.Dao;
 import ru.model.User;
+import ru.util.Utils;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class DeleteUserServlet extends HttpServlet {
+public class UpdateUserServlet extends HttpServlet {
 
     private Map<Integer, User> users;
 
@@ -30,13 +31,36 @@ public class DeleteUserServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+            throws  IOException {
 
         req.setCharacterEncoding("UTF-8");
 
-        users.remove(Integer.valueOf(req.getParameter("id")));
+        final String id = req.getParameter("id");
+        final String name = req.getParameter("name");
+
+        final User user = users.get(Integer.parseInt(id));
+        user.setName(name);
 
         resp.sendRedirect(req.getContextPath() + "/");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        final String id = req.getParameter("id");
+
+        if (Utils.idIsInvalid(id, users)) {
+            resp.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        final User user = users.get(Integer.parseInt(id));
+        req.setAttribute("user", user);
+
+        req.getRequestDispatcher("/WEB-INF/view/update.jsp")
+                .forward(req, resp);
     }
 }

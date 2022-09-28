@@ -39,5 +39,16 @@
         <servlet-class>ru.servlet.DeleteUserServlet</servlet-class>
     </servlet>
 
+    <!--Update user-->
+    <servlet-mapping>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <servlet-class>ru.servlet.UpdateUserServlet</servlet-class>
+    </servlet>
+
 
 </web-app>
