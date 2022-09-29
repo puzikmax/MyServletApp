@@ -11,10 +11,11 @@
 
 <c:forEach var="user" items="${requestScope.users}">
     <ul>
-
+        <li>ID: <c:out value="${user.id}"/></li>
         <li>Имя: <c:out value="${user.name}"/></li>
-
         <li>Возраст: <c:out value="${user.age}"/></li>
+        <li>Валюты: <c:out value="${user.currency}"/></li>
+
 
         <form method="post" action="<c:url value='/delete'/>">
             <input type="number" hidden name="id" value="${user.id}" />

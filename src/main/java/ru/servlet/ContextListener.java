@@ -1,12 +1,13 @@
 package ru.servlet;
 
+import ru.DAO.UserDao;
 import ru.model.User;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
@@ -19,9 +20,7 @@ public class ContextListener implements ServletContextListener {
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();
 
-        users = new ConcurrentHashMap<>();
-
-        servletContext.setAttribute("users", users);
+        servletContext.setAttribute("userDao", new UserDao());
 
     }
 

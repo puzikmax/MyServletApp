@@ -1,47 +1,28 @@
 package ru.servlet;
 
 import ru.model.User;
-import ru.util.Utils;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Objects;
 
 
-public class UpdateUserServlet extends HttpServlet {
-
-    private Map<Integer, User> users;
-
-    @Override
-    public void init() {
-
-        final Object users = getServletContext().getAttribute("users");
-
-        if (users == null || !(users instanceof ConcurrentHashMap)) {
-
-            throw new IllegalStateException("You're repo does not initialize!");
-        } else {
-
-            this.users = (ConcurrentHashMap<Integer, User>) users;
-        }
-    }
+public class UpdateUserServlet extends ContextHttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws  IOException {
+            throws IOException {
 
         req.setCharacterEncoding("UTF-8");
 
-        final String id = req.getParameter("id");
+        final int id = Integer.parseInt(req.getParameter("id"));
         final String name = req.getParameter("name");
 
-        final User user = users.get(Integer.parseInt(id));
+        User user = new User(id);
         user.setName(name);
+        getUserDao().update(user);
 
         resp.sendRedirect(req.getContextPath() + "/");
     }
@@ -52,15 +33,15 @@ public class UpdateUserServlet extends HttpServlet {
 
         final String id = req.getParameter("id");
 
-        if (Utils.idIsInvalid(id, users)) {
+        final User user = getUserDao().getById(Integer.parseInt(id));
+
+        if (Objects.isNull(user)) {
             resp.sendRedirect(req.getContextPath() + "/");
             return;
         }
 
-        final User user = users.get(Integer.parseInt(id));
         req.setAttribute("user", user);
-
-        req.getRequestDispatcher("/WEB-INF/view/update.jsp")
-                .forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/view/update.jsp").forward(req, resp);
     }
+
 }

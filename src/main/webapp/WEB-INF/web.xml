@@ -49,6 +49,4 @@
         <servlet-name>UpdateUserServlet</servlet-name>
         <servlet-class>ru.servlet.UpdateUserServlet</servlet-class>
     </servlet>
-
-
 </web-app>
