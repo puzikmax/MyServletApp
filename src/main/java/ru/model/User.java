@@ -1,14 +1,27 @@
 package ru.model;
 
-public class User {
+public class User implements BaseModel {
+
     private int id;
     private String name;
+    private int age;
 
-    public User(int id, String name) {
-        this.name = name;
+    public int getCurrency() {
+        return currency;
     }
 
-    public User() {}
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
+
+    private int currency;
+
+    public User() {
+    }
+
+    public User(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -18,11 +31,16 @@ public class User {
         this.name = name;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public int getId() {
         return id;
-    }
-    public void setId(int id) {
-        this.id = id;
     }
 
 }
