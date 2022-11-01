@@ -1,38 +1,25 @@
 package ru.servlet;
 
-import ru.model.User;
+import ru.service.UserDaoImpl;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 public class DeleteUserServlet extends HttpServlet {
 
-    private Map<Integer, User> users;
-
     @Override
-    public void init() {
-
-        final Object users = getServletContext().getAttribute("users");
-
-        if (users == null || !(users instanceof ConcurrentHashMap)) {
-
-            throw new IllegalStateException("You're repo does not initialize!");
-        } else {
-
-            this.users = (ConcurrentHashMap<Integer, User>) users;
-        }
-    }
-
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        request.setCharacterEncoding("UTF-8");
 
-        req.setCharacterEncoding("UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        userDao.delete(id);
 
-        users.remove(Integer.valueOf(req.getParameter("id")));
-
-        resp.sendRedirect(req.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + "/");
     }
+
 }

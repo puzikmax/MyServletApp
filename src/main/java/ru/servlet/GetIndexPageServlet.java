@@ -1,6 +1,8 @@
 package ru.servlet;
 
 import ru.model.User;
+import ru.service.UserDaoImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,28 +12,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GetIndexPageServlet extends HttpServlet {
-
-    private Map<Integer, User> users;
-
-    @Override
-    public void init() {
-
-        final Object users = getServletContext().getAttribute("users");
-
-        if (users == null || !(users instanceof ConcurrentHashMap)) {
-
-            throw new IllegalStateException("You'eeee repo does not initialize!");
-        } else {
-
-            this.users = (ConcurrentHashMap<Integer, User>) users;
-        }
-    }
+    UserDaoImpl userDao = new UserDaoImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        req.setAttribute("users", users.values());
-        req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+        request.setAttribute("users", userDao.getAllUsers());
+        request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
     }
 }
