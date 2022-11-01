@@ -8,21 +8,19 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+@NoArgsConstructor
+@Setter
+@Getter
+@Table(name = "currency")
+public class Currency {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "age")
-    private int age;
+    @Column(name = "code_cur")
+    private String codeCurrency;
 
 }
